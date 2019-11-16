@@ -1,0 +1,14 @@
+1- ho cambiato alphabet.append(1, i); con newString.insert(1,i); //da verificare
+alphabet= newString.toString();
+con newString StringBuiled
+2- Sketch::getMinKmerSize(uint64_t reference) const
+{
+	return ceil(log(references[reference].length * (1 - parameters.warning) / parameters.warning) / log(parameters.alphabetSize));
+}
+ public int getMinKmerSize(long reference){
+	   return (int) Math.ceil(Math.log(references.get(references.indexOf(reference)).length * (1 - parameters.warning) / parameters.warning) / Math.log(parameters.alphabetSize));
+   }
+   
+-3 inStream= System.in.toString();  inStream = stdin
+
+Sketch funzione sketchFileBySequence non implementata
