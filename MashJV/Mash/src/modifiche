@@ -12,3 +12,9 @@ con newString StringBuiled
 -3 inStream= System.in.toString();  inStream = stdin
 
 Sketch funzione sketchFileBySequence non implementata
+Sketch riga 446 
+ const char *kmer_fwd = seq + i;
+        const char *kmer_rev = seqRev + length - i - kmerSize; 
+**Cambiato in **
+String kmer_fwd = seq.toString() +i;
+String kmer_rev = seqRev.toString() + (length -i -kmerSize);

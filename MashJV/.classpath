@@ -6,27 +6,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/alfonso/Downloads/fastutil-8.3.0.jar">
+	<classpathentry kind="lib" path="/home/alfonso/Downloads/guava-28.1-jre.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/alfonso/Downloads/jgsl-0.1.0.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/Users/alfonso/Downloads/commons-math3-3.6.1/commons-math3-3.6.1-tools.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/Users/alfonso/Downloads/apache-opennlp-1.7.2/lib/opennlp-tools-1.7.2.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/Users/alfonso/Downloads/guava-28.1-jre.jar">
+	<classpathentry kind="lib" path="/home/alfonso/Downloads/opennlp-tools-1.7.1.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

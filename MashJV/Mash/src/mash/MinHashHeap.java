@@ -5,11 +5,8 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
-import com.github.lovasoa.bloomfilter.BloomFilter;
 
 import com.google.common.hash.BloomFilter;
-
-import it.unimi.dsi.fastutil.Hash;
 import opennlp.tools.util.HashList;
 
 public class MinHashHeap {

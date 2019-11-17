@@ -7,6 +7,7 @@ package mash;
 import java.io.File;
 import opennlp.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -384,15 +385,37 @@ public class Sketch {
     		if(! parameters.preserveCase && seq[(int) i] > 96 && seq[(int) i]< 123)
     			seq[(int) i] -= 32;
     	} // fine for
-    	char seqRev [];
+    	char seqRev [] = null;
     	if(!noncanonical) {
-    		seqRev = (char) length;
+    		seqRev = new char [(int) length];
+    		reverseComplement(seq, seqRev, length);
     	}
+    	long j =0;
+    	for(long i=0; i<length -kmerSize +1 ; i++) {
+    		//repeatedly skip kmers with bad characters
+    		boolean bad = false;
+    		for(; j < i + kmerSize && i + kmerSize <= length; j++ ) {
+    			if(!parameters.alphabet[seq[(int)j]]) {
+    				i = j++;
+    				bad= true;
+    				break;
+    			}
+    		}
+    		if(bad) continue;
+    		if(i+kmerSize > length) break;
+    		
+    		final String kmer_fwd = seq.toString() +i;
+    		final String kmer_rev = seqRev.toString() + (length -i -kmerSize);
+    		final String kmer = (noncanonical||Arrays.asList(kmer_fwd).subList(0,kmerSize).equals(Arrays.asList(kmer_rev).subList(0,kmerSize))<=0 )? kmer_fwd : kmer_rev;
+    		
+    		boolean filter = false;
+    	} // end for
+    	
     }
     private void getMinHashPositions(ArrayList<PositionHash>  loci, char  seq, int length, Parameters  parameters, int verbosity ) {} //verbosity =0 default
     private boolean hasSuffix(String whole, String suffix) {}
     private SketchOutput loadCapnp(SketchInput  input) {}
-    private void reverseComplement( char src, char  dest, int length) {}
+    private void reverseComplement( char[] seq, char[]  seqRev, long length) {}
     private void setAlphabetFromString(Parameters parameters, char  characters) {}
     void setMinHashesForReference(Reference  reference, MinHashHeap  hashes) {}
     private SketchOutput sketchFile (SketchInput  input) {
