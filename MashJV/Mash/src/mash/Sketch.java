@@ -377,13 +377,14 @@ public class Sketch {
         
         kmerSpace = Math.pow(parameters.alphabetSize, parameters.kmerSize);
     }
-    private void addMinHashes(MinHashHeap minHashHeap, char seq[], long length, Parameters  parameters) {
+    private void addMinHashes(MinHashHeap minHashHeap, char [] seq, long length, Parameters  parameters) {
     	int kmerSize = parameters.kmerSize;
     	long mins = parameters.minHashesPerWindow;
     	boolean noncanonical = parameters.noncanonical;
     	for( long i =0; i< length; i++) {
-    		if(! parameters.preserveCase && seq[(int) i] > 96 && seq[(int) i]< 123)
-    			seq[(int) i] -= 32;
+    		if(! parameters.preserveCase && seq[(int) i]  > 96 && seq[(int)i]< 123)
+    			
+    			seq[(int)i] -= 32;
     	} // fine for
     	char seqRev [] = null;
     	if(!noncanonical) {
@@ -404,10 +405,10 @@ public class Sketch {
     		if(bad) continue;
     		if(i+kmerSize > length) break;
     		
-    		final String kmer_fwd = seq.toString() +i;
-    		final String kmer_rev = seqRev.toString() + (length -i -kmerSize);
-    		final String kmer = (noncanonical||Arrays.asList(kmer_fwd).subList(0,kmerSize).equals(Arrays.asList(kmer_rev).subList(0,kmerSize))<=0 )? kmer_fwd : kmer_rev;
-    		
+    		final String kmer_fwd = seq.toString().substring((int) (seq.length-i));
+    	
+    		final String kmer_rev = seqRev.toString().substring((int) (seqRev.length + length - i -kmerSize));
+    		final String kmer = (noncanonical || memcmp(kmer_fwd.substring(0,kmerSize).getBytes(), kmer_rev.substring(0,kmerSize).getBytes()) <= 0) ? kmer_fwd : kmer_rev;
     		boolean filter = false;
     	} // end for
     	
@@ -425,5 +426,18 @@ public class Sketch {
     	
     }
     
+    public static int memcmp(final byte[] a, final byte[] b) {
+        final int length = Math.min(a.length, b.length);
+        if (a == b) {  // Do this after accessing a.length and b.length
+          return 0;    // in order to NPE if either a or b is null.
+        }
+        for (int i = 0; i < length; i++) {
+          if (a[i] != b[i]) {
+            return (a[i] & 0xFF) - (b[i] & 0xFF);  // "promote" to unsigned.
+          }
+        }
+        return a.length - b.length;
+      }
+      
     
 }
