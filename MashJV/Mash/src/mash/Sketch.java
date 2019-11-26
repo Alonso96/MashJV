@@ -5,15 +5,24 @@
  */
 package mash;
 import java.io.File;
+import mash.Hash_U;
 import opennlp.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.Hashtable;  
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.Queue;
+import java.util.TreeMap;
+
 import javax.swing.text.StyledEditorKit;
+
+import com.sun.java.swing.plaf.windows.resources.windows;
 /**
  *
  * @author alfonso
@@ -411,9 +420,100 @@ public class Sketch {
     		final String kmer = (noncanonical || memcmp(kmer_fwd.substring(0,kmerSize).getBytes(), kmer_rev.substring(0,kmerSize).getBytes()) <= 0) ? kmer_fwd : kmer_rev;
     		boolean filter = false;
     	} // end for
+    	if (!noncanonical) seqRev = null;
     	
     }
-    private void getMinHashPositions(ArrayList<PositionHash>  loci, char  seq, int length, Parameters  parameters, int verbosity ) {} //verbosity =0 default
+    private void getMinHashPositions(ArrayList<PositionHash>  loci, char [] seq, int length, Parameters  parameters, int verbosity ) { //verbosity = 0 default
+    
+    	int kmerSize = parameters.kmerSize;
+    	    int mins = (int) parameters.minHashesPerWindow;
+    	    int windowSize = (int) parameters.windowSize;
+    	    
+    	    int nextValidKmer = 0;
+    	    
+    	    if ( windowSize > length - kmerSize + 1 )
+    	    {
+    	        windowSize = length - kmerSize + 1;
+    	    }
+    	    
+    	    if ( verbosity > 1 ) System.out.println(seq);
+    	    // Associate positions with flags so they can be marked as min-hashes
+    	    // at any point while the window is moved across them
+    	    //
+    	   class CandidateLocus
+    	    {
+    	        public CandidateLocus(int positionNew) {
+    	            
+    	            position=positionNew;
+    	            isMinmer=false;
+    	            }
+    	        
+    	        int position;
+    	        boolean isMinmer;
+    	    }
+    	   NavigableMap<Long, Deque<CandidateLocus>> candidatesByHash = new TreeMap<Long,Deque<CandidateLocus>>(); //Uso treemap per poter accedere all'ulimo elemento inserito
+    	   Deque<CandidateLocus> dq;
+    	  // Iterator it = dq.iterator();	
+    	   Queue<Map<Long,Iterator<Deque<CandidateLocus>>>> windowQueue;
+    	   //Entry<String, Integer> lastEntry = map.lastEntry();
+    	   HashMap<Long,Iterator<Deque<CandidateLocus>>> maxMinmer = (HashMap<Long, Iterator<Deque<CandidateLocus>>>) candidatesByHash.lastEntry();
+    	   HashMap<Long,Iterator<Deque<CandidateLocus>>> newCandidates;
+    	   int unique = 0;
+    	   for ( int i = 0; i < length - kmerSize + 1; i++ )
+    	    {
+    	        // Increment the next valid kmer if needed. Invalid kmers must still be
+    	        // processed to keep the queue filled, but will be associated with a
+    	        // dummy iterator. (Currently disabled to allow all kmers; see below)
+    	        //
+    	        if ( i >= nextValidKmer )
+    	        {
+    	            for ( int j = i; j < i + kmerSize; j++ )
+    	            {
+    	                char c = seq[j];
+    	                
+    	                if ( c != 'A' && c != 'C' && c != 'G' && c != 'T' )
+    	                {
+    	                    // Uncomment to skip invalid kmers
+    	                    //
+    	                    //nextValidKmer = j + 1;
+    	                    
+    	                    break;
+    	                }
+    	            }
+    	        }
+    	        if ( i < nextValidKmer && verbosity > 1 )
+    	        {
+    	            System.out.println( "  [");
+    	        
+    	            for ( int j = i; j < i + kmerSize; j++ )
+    	            {
+    	            	System.out.println(seq[j]);
+    	            }
+    	            
+    	            System.out.println( "  ]");
+    	        }
+    	        if(i >= nextValidKmer) {
+    	        	Hash_U h = new Hash_U();
+    	        	long hash =  h.getHash(seq.toString().substring((int) (seq.length-i)), kmerSize, parameters.seed, parameters.use64);
+    	        	 if ( verbosity > 1 )
+    	             {
+    	                 System.out.println("  ");
+    	             
+    	                 for ( int j = i; j < i + kmerSize; j++ )
+    	                 {
+    	                	 System.out.println(seq[j]);
+    	                 }
+    	             
+    	                 System.out.println("  "+ i + '\t' +hash);
+    	             }
+    	             
+    	        }
+    	    }//fine for
+    	   
+    } //verbosity =0 default
+    private void getMinHashPositions(ArrayList<PositionHash>  loci, char [] seq, int length, Parameters  parameters) { //overload per parametro op<ionale
+    	getMinHashPositions(loci, seq, length, parameters,0);
+    }
     private boolean hasSuffix(String whole, String suffix) {}
     private SketchOutput loadCapnp(SketchInput  input) {}
     private void reverseComplement( char[] seq, char[]  seqRev, long length) {}

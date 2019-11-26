@@ -18,3 +18,5 @@ Sketch riga 446
 **Cambiato in **
 String kmer_fwd = seq.toString() +i;
 String kmer_rev = seqRev.toString() + (length -i -kmerSize);
+
+hash_t è diventato una classe di nome Hash_U con dentro due long, si suppone l'utilizzo di macchine 64-bit
