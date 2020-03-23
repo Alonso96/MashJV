@@ -110,6 +110,7 @@ public class Sketch {
         double targetCov;
         long genomeSize;
     }// Parameters
+    
     class PositionHash{
         Hashtable hash ;
         int position;
@@ -174,7 +175,7 @@ public class Sketch {
     }
     
    public float getError(){
-       return parameters.error;
+       return (float) parameters.error;
    }
    
    public Integer getHashCount(){
@@ -353,7 +354,7 @@ public class Sketch {
     	createIndex();
     	
     }
-    long initParametersFromCapnp(String file){
+    long initParametersFromCapnp(String file){ // con capnproto da vedere meglio
     }
     public void setReferenceName(int i, String name) {
             references.get(i).name = name;
@@ -361,14 +362,14 @@ public class Sketch {
     public void setReferenceComment(int i, String comment) {
         references.get(i).comment = comment;
     }
-    public boolean sketchFileBySequence(File file, ThreadPool<SketchInput, SketchOutput>  threadPool) {
+    public boolean sketchFileBySequence(File file, ThreadPool<SketchInput, SketchOutput>  threadPool) { // da capire meglio cosa fa nel codice C
     	
     	
     }
     public void useThreadOutput(SketchOutput output){}
     public void warnKmerSize(long  lengthMax, String lengthMaxName, double randomChance, int kMin, int warningCount){}
-    public boolean writeToFile(){}
-    int writeToCapnp(String file){}
+    public boolean writeToFile(){} 
+    int writeToCapnp(String file){} // capnproto
     private void createIndex(){
     	
     	for (int i= 0 ; i< references.size(); i++) {
@@ -511,12 +512,13 @@ public class Sketch {
     	    }//fine for
     	   
     } //verbosity =0 default
-    private void getMinHashPositions(ArrayList<PositionHash>  loci, char [] seq, int length, Parameters  parameters) { //overload per parametro op<ionale
+    
+    private void getMinHashPositions(ArrayList<PositionHash>  loci, char [] seq, int length, Parameters  parameters) { //overload per parametro opzionale
     	getMinHashPositions(loci, seq, length, parameters,0);
     }
-    private boolean hasSuffix(String whole, String suffix) {}
-    private SketchOutput loadCapnp(SketchInput  input) {}
-    private void reverseComplement( char[] seq, char[]  seqRev, long length) {}
+    private boolean hasSuffix(String whole, String suffix) {} 
+    private SketchOutput loadCapnp(SketchInput  input) {} // capnproto da vedere meglio
+    private void reverseComplement( char[] seq, char[]  seqRev, long length) {} 
     private void setAlphabetFromString(Parameters parameters, char  characters) {}
     void setMinHashesForReference(Reference  reference, MinHashHeap  hashes) {}
     private SketchOutput sketchFile (SketchInput  input) {

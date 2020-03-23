@@ -1,22 +1,22 @@
 1- ho cambiato alphabet.append(1, i); con newString.insert(1,i); //da verificare
-alphabet= newString.toString();
-con newString StringBuiled
+	alphabet= newString.toString();
+	con newString StringBuiled
 2- Sketch::getMinKmerSize(uint64_t reference) const
-{
+	{
 	return ceil(log(references[reference].length * (1 - parameters.warning) / parameters.warning) / log(parameters.alphabetSize));
-}
- public int getMinKmerSize(long reference){
+	}
+ 	public int getMinKmerSize(long reference){
 	   return (int) Math.ceil(Math.log(references.get(references.indexOf(reference)).length * (1 - parameters.warning) / parameters.warning) / Math.log(parameters.alphabetSize));
-   }
+   	}
    
 -3 inStream= System.in.toString();  inStream = stdin
 
-Sketch funzione sketchFileBySequence non implementata
-Sketch riga 446 
- const char *kmer_fwd = seq + i;
+	Sketch funzione sketchFileBySequence non implementata
+	Sketch riga 446 
+ 	const char *kmer_fwd = seq + i;
         const char *kmer_rev = seqRev + length - i - kmerSize; 
-**Cambiato in **
-String kmer_fwd = seq.toString() +i;
-String kmer_rev = seqRev.toString() + (length -i -kmerSize);
+	**Cambiato in **
+		String kmer_fwd = seq.toString() +i;
+		String kmer_rev = seqRev.toString() + (length -i -kmerSize);
 
-hash_t è diventato una classe di nome Hash_U con dentro due long, si suppone l'utilizzo di macchine 64-bit
+	hash_t è diventato una classe di nome Hash_U con dentro due long, si suppone l'utilizzo di macchine 64-bit
